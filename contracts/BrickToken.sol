@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 // BrickToken with Governance.
-contract BrickToken is ERC20("Brick Token", "Brick"), Ownable {
+contract BrickToken is ERC20("Brick Chain", "BRICK"), Ownable {
     uint8 public constant burnDivisor = 100;
 
     // Creates `_amount` token to `_to`. Must only be called by the owner (DonBuilder).
