@@ -9,6 +9,11 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract BrickToken is ERC20("BrickChain", "BRICK"), Ownable {
     uint8 public constant burnDivisor = 100;
 
+    /// @dev Destroys `amount` tokens from the caller.
+    function burn(uint256 amount) public virtual {
+        _burn(_msgSender(), amount);
+    }
+
     // Creates `_amount` token to `_to`. Must only be called by the owner (DonBuilder).
     function mint(address _to, uint256 _amount) public onlyOwner {
         _mint(_to, _amount);
