@@ -49,10 +49,10 @@ contract Builder is Ownable {
 
     // The Brick TOKEN!
     BrickToken public brick;
-    // Dev address. (4%)
+    // Dev address. (2%)
     address public devAddr;
-    // Product address. (4%)
-    address public productAddr;
+    // lottery address. (2%)
+    address public lotteryAddr; // this will be a contract address
     // Brick tokens created per block.
     uint256 public brickPerBlock;
     // Bonus muliplier for early brick makers.
@@ -80,14 +80,14 @@ contract Builder is Ownable {
     constructor(
         BrickToken _brick,
         address _devAddr,
-        address _productAddr,
+        address _lotteryAddr,
         address _feeAddress,
         uint256 _brickPerBlock,
         uint256 _startBlock
     ) public {
         brick = _brick;
         devAddr = _devAddr;
-        productAddr = _productAddr;
+        lotteryAddr = _lotteryAddr;
         feeAddress = _feeAddress;
         brickPerBlock = _brickPerBlock;
         startBlock = _startBlock;
@@ -102,16 +102,13 @@ contract Builder is Ownable {
     function add(
         uint256 _allocPoint,
         IERC20 _lpToken,
-        uint16 _depositFeeBP,
-        bool _withUpdate
+        uint16 _depositFeeBP
     ) public onlyOwner {
         require(
             _depositFeeBP <= 10000,
             "add: invalid deposit fee basis points"
         );
-        if (_withUpdate) {
-            massUpdatePools();
-        }
+        massUpdatePools();
         uint256 lastRewardBlock =
             block.number > startBlock ? block.number : startBlock;
         totalAllocPoint = totalAllocPoint.add(_allocPoint);
@@ -130,16 +127,13 @@ contract Builder is Ownable {
     function set(
         uint256 _pid,
         uint256 _allocPoint,
-        uint16 _depositFeeBP,
-        bool _withUpdate
+        uint16 _depositFeeBP
     ) public onlyOwner {
         require(
             _depositFeeBP <= 10000,
             "set: invalid deposit fee basis points"
         );
-        if (_withUpdate) {
-            massUpdatePools();
-        }
+        massUpdatePools();
         totalAllocPoint = totalAllocPoint.sub(poolInfo[_pid].allocPoint).add(
             _allocPoint
         );
@@ -206,10 +200,10 @@ contract Builder is Ownable {
                 totalAllocPoint
             );
 
-        uint256 teamReward = brickReward.div(8);
-        brick.mint(devAddr, teamReward.div(2));
-        brick.mint(productAddr, teamReward.div(2));
-        brick.mint(address(this), brickReward);
+        uint256 rewards = brickRewards.div(4);
+        brick.mint(devAddr, rewards.div(2));
+        brick.mint(lotteryAddr, rewards.div(2));
+        brick.mint(address(this), brickRewards);
 
         pool.accBrickPerShare = pool.accBrickPerShare.add(
             brickReward.mul(1e12).div(lpSupply)
@@ -298,13 +292,13 @@ contract Builder is Ownable {
     }
 
     /// @notice Update dev address by the previous pm.
-    function product(address _productAddr) public {
-        require(msg.sender == productAddr, "product: invalid sender");
-        productAddr = _productAddr;
+    function product(address _lotteryAddr) public {
+        require(msg.sender == lotteryAddr, "lottery: invalid sender");
+        lotteryAddr = _lotteryAddr;
     }
 
     function setFeeAddress(address _feeAddress) public {
-        require(msg.sender == feeAddress, "setFeeAddress: FORBIDDEN");
+        require(msg.sender == feeAddress, "feeAddress: invalid sender");
         feeAddress = _feeAddress;
     }
 
