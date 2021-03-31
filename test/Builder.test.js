@@ -62,31 +62,31 @@ contract(
       this.lp9 = await TestToken.new("LPToken", "LP3", "1000000", {
         from: minter,
       });
-      await this.builder.add("2000", this.lp1.address, 0, true, {
+      await this.builder.add("2000", this.lp1.address, 0, {
         from: minter,
       });
-      await this.builder.add("1000", this.lp2.address, 0, true, {
+      await this.builder.add("1000", this.lp2.address, 0, {
         from: minter,
       });
-      await this.builder.add("500", this.lp3.address, 0, true, {
+      await this.builder.add("500", this.lp3.address, 0, {
         from: minter,
       });
-      await this.builder.add("500", this.lp3.address, 0, true, {
+      await this.builder.add("500", this.lp3.address, 0, {
         from: minter,
       });
-      await this.builder.add("500", this.lp3.address, 0, true, {
+      await this.builder.add("500", this.lp3.address, 0, {
         from: minter,
       });
-      await this.builder.add("500", this.lp3.address, 0, true, {
+      await this.builder.add("500", this.lp3.address, 0, {
         from: minter,
       });
-      await this.builder.add("500", this.lp3.address, 0, true, {
+      await this.builder.add("500", this.lp3.address, 0, {
         from: minter,
       });
-      await this.builder.add("100", this.lp3.address, 0, true, {
+      await this.builder.add("100", this.lp3.address, 0, {
         from: minter,
       });
-      await this.builder.add("100", this.lp3.address, 0, true, {
+      await this.builder.add("100", this.lp3.address, 0, {
         from: minter,
       });
 
@@ -95,7 +95,7 @@ contract(
 
     it("should not mint before the start date", async () => {
       // 1000 per block pouring rate starting at block 100
-      await this.builder.add("100", this.lp1.address, 0, true, {
+      await this.builder.add("100", this.lp1.address, 0, {
         from: minter,
       });
       await this.lp1.approve(this.builder.address, "1000", { from: bob });
@@ -107,13 +107,13 @@ contract(
 
     it("deposit/withdraw operation", async () => {
       const pid = 0; // 1000 bricks to distribute per block
-      await this.builder.add("1000", this.lp1.address, 0, true, {
+      await this.builder.add("1000", this.lp1.address, 0, {
         from: minter,
       });
-      await this.builder.add("1000", this.lp2.address, 0, true, {
+      await this.builder.add("1000", this.lp2.address, 0, {
         from: minter,
       });
-      await this.builder.add("1000", this.lp3.address, 0, true, {
+      await this.builder.add("1000", this.lp3.address, 0, {
         from: minter,
       });
 
@@ -147,7 +147,7 @@ contract(
     });
 
     it("should allow emergency withdraw", async () => {
-      await this.builder.add("100", this.lp1.address, 0, true, {
+      await this.builder.add("100", this.lp1.address, 0, {
         from: minter,
       });
       await this.lp1.approve(this.builder.address, "1000", { from: bob });

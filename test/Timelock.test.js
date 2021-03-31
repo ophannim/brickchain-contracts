@@ -100,12 +100,12 @@ contract(
       );
 
       await this.brick.transferOwnership(this.builder.address, { from: alice });
-      await this.builder.add("100", this.lp1.address, 0, true, { from: alice });
+      await this.builder.add("100", this.lp1.address, 0, { from: alice });
       await this.builder.transferOwnership(this.timelock.address, {
         from: alice,
       });
       await expectRevert(
-        this.builder.add("100", this.lp1.address, 0, true, { from: alice }),
+        this.builder.add("100", this.lp1.address, 0, { from: alice }),
         "revert Ownable: caller is not the owner"
       );
 
@@ -132,7 +132,7 @@ contract(
         { from: bob }
       );
       await expectRevert(
-        this.builder.add("100", this.lp1.address, 0, true, { from: alice }),
+        this.builder.add("100", this.lp1.address, 0, { from: alice }),
         "revert Ownable: caller is not the owner"
       );
       await this.builder.add("100", this.lp1.address, 0, true, {

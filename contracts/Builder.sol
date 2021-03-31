@@ -24,6 +24,7 @@ contract Builder is Ownable {
     // Info of each user.
     struct UserInfo {
         uint256 amount; // How many LP tokens the user has provided.
+        uint256 lastDeposit;
         uint256 rewardDebt; // Reward debt. See explanation below.
         //
         // We do some fancy math here. Basically, any point in time, the amount of Bricks
@@ -200,10 +201,10 @@ contract Builder is Ownable {
                 totalAllocPoint
             );
 
-        uint256 rewards = brickRewards.div(4);
+        uint256 rewards = brickReward.div(4);
         brick.mint(devAddr, rewards.div(2));
         brick.mint(lotteryAddr, rewards.div(2));
-        brick.mint(address(this), brickRewards);
+        brick.mint(address(this), brickReward);
 
         pool.accBrickPerShare = pool.accBrickPerShare.add(
             brickReward.mul(1e12).div(lpSupply)
@@ -240,6 +241,7 @@ contract Builder is Ownable {
             }
         }
         user.rewardDebt = user.amount.mul(pool.accBrickPerShare).div(1e12);
+        user.lastDeposit = now;
         emit Deposit(msg.sender, _pid, _amount);
     }
 
