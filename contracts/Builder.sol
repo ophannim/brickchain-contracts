@@ -78,6 +78,9 @@ contract Builder is Ownable {
         uint256 indexed pid,
         uint256 amount
     );
+    event SetFee(address newFeeAddr);
+    event SetDev(address newDevAddr);
+    event SetProduct(address newProductAddr);
 
     constructor(
         BrickToken _brick,
@@ -300,6 +303,7 @@ contract Builder is Ownable {
         require(msg.sender == devAddr, "dev: invalid sender");
         require(_devAddr != address(0), "dev: invalid address");
         devAddr = _devAddr;
+        emit SetDev(devAddr);
     }
 
     /// @notice Update dev address by the previous pm.
@@ -307,12 +311,14 @@ contract Builder is Ownable {
         require(msg.sender == productAddr, "product: invalid sender");
         require(_productAddr != address(0), "product: invalid address");
         productAddr = _productAddr;
+        emit SetProduct(productAddr);
     }
 
     function setFeeAddress(address _feeAddress) external {
         require(msg.sender == feeAddress, "setFeeAddress: invalid sender");
         require(_feeAddress != address(0), "setFeeAddress: invalid address");
         feeAddress = _feeAddress;
+        emit SetFee(feeAddress);
     }
 
     /// @notice transparent and simple way to alter the emission.
