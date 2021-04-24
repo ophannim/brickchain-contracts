@@ -298,17 +298,20 @@ contract Builder is Ownable {
     /// @notice Update dev address by the previous dev.
     function dev(address _devAddr) public {
         require(msg.sender == devAddr, "dev: invalid sender");
+        require(_devAddr != address(0), "dev: invalid address");
         devAddr = _devAddr;
     }
 
     /// @notice Update dev address by the previous pm.
     function product(address _productAddr) public {
         require(msg.sender == productAddr, "product: invalid sender");
+        require(_productAddr != address(0), "product: invalid address");
         productAddr = _productAddr;
     }
 
     function setFeeAddress(address _feeAddress) public {
-        require(msg.sender == feeAddress, "setFeeAddress: FORBIDDEN");
+        require(msg.sender == feeAddress, "setFeeAddress: invalid sender");
+        require(_feeAddress != address(0), "setFeeAddress: invalid address");
         feeAddress = _feeAddress;
     }
 

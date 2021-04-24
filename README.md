@@ -26,3 +26,7 @@ BTE03: Privileged Ownerships on BrickToken
 BUI01: add() Function Not Restricted
 
 - e2cd259a4422a0a553e6bd2750af32f6044517f7
+
+BUI02: Missing Zero Address Validation
+
+-
