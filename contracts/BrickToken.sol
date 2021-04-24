@@ -9,24 +9,39 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract BrickToken is ERC20("BrickChain", "BRICK"), Ownable {
     uint8 public constant burnDivisor = 100;
 
-    // Creates `_amount` token to `_to`. Must only be called by the owner (DonBuilder).
+    // Creates `_amount` token to `_to`. Must only be called by the owner (Builder).
     function mint(address _to, uint256 _amount) public onlyOwner {
         _mint(_to, _amount);
         _moveDelegates(address(0), _delegates[_to], _amount);
     }
 
-    function transfer(address recipient, uint256 amount)
-        public
-        virtual
-        override
-        returns (bool)
-    {
+    function _transfer(
+        address sender,
+        address recipient,
+        uint256 amount
+    ) internal virtual override {
         // transfer burn amount is 1%
         uint256 burnAmount = amount.div(burnDivisor);
-        // sender loses the 1%
         _burn(msg.sender, burnAmount);
         // sender transfers 99%
-        return super.transfer(recipient, amount.sub(burnAmount));
+        uint256 amountToTransfer = amount.sub(burnAmount);
+        super._transfer(sender, recipient, amountToTransfer);
+
+        _moveDelegates(
+            _delegates[sender],
+            _delegates[recipient],
+            amountToTransfer
+        );
+        _moveDelegates(_delegates[sender], address(0), burnAmount);
+    }
+
+    function transferFrom(
+        address sender,
+        address recipient,
+        uint256 amount
+    ) public virtual override returns (bool) {
+        _moveDelegates(_delegates[sender], _delegates[recipient], amount);
+        return super.transferFrom(sender, recipient, amount);
     }
 
     // Copied and modified from YAM code:
