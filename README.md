@@ -29,4 +29,10 @@ BUI01: add() Function Not Restricted
 
 BUI02: Missing Zero Address Validation
 
--
+- TODO
+
+BUI03: Proper Usage of Public and External
+
+- TODO
+
+

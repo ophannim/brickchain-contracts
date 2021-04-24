@@ -296,27 +296,27 @@ contract Builder is Ownable {
     }
 
     /// @notice Update dev address by the previous dev.
-    function dev(address _devAddr) public {
+    function dev(address _devAddr) external {
         require(msg.sender == devAddr, "dev: invalid sender");
         require(_devAddr != address(0), "dev: invalid address");
         devAddr = _devAddr;
     }
 
     /// @notice Update dev address by the previous pm.
-    function product(address _productAddr) public {
+    function product(address _productAddr) external {
         require(msg.sender == productAddr, "product: invalid sender");
         require(_productAddr != address(0), "product: invalid address");
         productAddr = _productAddr;
     }
 
-    function setFeeAddress(address _feeAddress) public {
+    function setFeeAddress(address _feeAddress) external {
         require(msg.sender == feeAddress, "setFeeAddress: invalid sender");
         require(_feeAddress != address(0), "setFeeAddress: invalid address");
         feeAddress = _feeAddress;
     }
 
     /// @notice transparent and simple way to alter the emission.
-    function updateEmissionRate(uint256 _brickPerBlock) public onlyOwner {
+    function updateEmissionRate(uint256 _brickPerBlock) external onlyOwner {
         massUpdatePools();
         brickPerBlock = _brickPerBlock;
     }
