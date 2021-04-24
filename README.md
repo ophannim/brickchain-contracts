@@ -15,24 +15,26 @@ https://brickchain.finance
 
 BTE01: Delegation Not Moved Along With transfer and transferFrom
 
-- 9eeee373c89c033531efd98f57adf9f0e55656b8
+- 6c6e65238fc34fc3df6707b457e4a561c654ce00
 
 BTE03: Privileged Ownerships on BrickToken
-
+- dbd2344148dcc5f2643fcecbeb63e63f2d2f6f3c
 - The BrickToken was transferred in favor to Builder (MasterChef)
 - The Builder (MasterChef) was transferred in favor to Timelock.
 - The Timelock is use with multisign gnosis wallet
 
 BUI01: add() Function Not Restricted
 
-- e2cd259a4422a0a553e6bd2750af32f6044517f7
+- 8b44bf663d459c2eb82cbb9b65656c201e71d7f7
 
 BUI02: Missing Zero Address Validation
 
-- TODO
+- f8f829cc1f208b039a8b37be66b4eda4c99b8ec9
 
 BUI03: Proper Usage of Public and External
 
-- TODO
+- 415f75735a25ed55c850c9c6e2e29be73f61c880
 
+BUI04: Missing Emit Event
 
+- 1f01b8619b17688b87bc3bb45d668dfbd5b349a0
