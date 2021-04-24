@@ -1,4 +1,4 @@
-# Brickchain Farming 🥞
+# Brickchain Farming
 
 https://brickchain.finance
 
