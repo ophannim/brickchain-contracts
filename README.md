@@ -22,3 +22,7 @@ BTE03: Privileged Ownerships on BrickToken
 - The BrickToken was transferred in favor to Builder (MasterChef)
 - The Builder (MasterChef) was transferred in favor to Timelock.
 - The Timelock is use with multisign gnosis wallet
+
+BUI01: add() Function Not Restricted
+
+- e2cd259a4422a0a553e6bd2750af32f6044517f7

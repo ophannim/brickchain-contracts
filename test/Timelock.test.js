@@ -118,10 +118,7 @@ contract(
         eta,
         { from: bob }
       );
-      // await this.timelock.queueTransaction(
-      //     this.builder.address, '0', 'add(uint256,address,bool)',
-      //     encodeParameters(['uint256', 'address', 'bool'], ['100', this.lp2.address, false]), eta, { from: bob },
-      // );
+      
       await time.increase(time.duration.hours(9));
       await this.timelock.executeTransaction(
         this.builder.address,
@@ -132,19 +129,13 @@ contract(
         { from: bob }
       );
       await expectRevert(
-        this.builder.add("100", this.lp1.address, 0, true, { from: alice }),
+        this.builder.add("100", this.lp2.address, 0, true, { from: alice }),
         "revert Ownable: caller is not the owner"
       );
-      await this.builder.add("100", this.lp1.address, 0, true, {
+      await this.builder.add("100", this.lp2.address, 0, true, {
         from: minter,
       });
-      // await this.timelock.executeTransaction(
-      //     this.builder.address, '0', 'add(uint256,address,bool)',
-      //     encodeParameters(['uint256', 'address', 'bool'], ['100', this.lp2.address, false]), eta, { from: bob },
-      // );
-      // assert.equal((await this.builder.poolInfo('0')).valueOf().allocPoint, '200');
-      // assert.equal((await this.builder.totalAllocPoint()).valueOf(), '300');
-      // assert.equal((await this.builder.poolLength()).valueOf(), '2');
     });
+    
   }
 );

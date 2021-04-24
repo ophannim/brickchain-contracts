@@ -71,25 +71,30 @@ contract(
       await this.builder.add("500", this.lp3.address, 0, true, {
         from: minter,
       });
-      await this.builder.add("500", this.lp3.address, 0, true, {
+      await this.builder.add("500", this.lp4.address, 0, true, {
         from: minter,
       });
-      await this.builder.add("500", this.lp3.address, 0, true, {
+      await this.builder.add("500", this.lp5.address, 0, true, {
         from: minter,
       });
-      await this.builder.add("500", this.lp3.address, 0, true, {
+      await this.builder.add("500", this.lp6.address, 0, true, {
         from: minter,
       });
-      await this.builder.add("500", this.lp3.address, 0, true, {
+      await this.builder.add("500", this.lp7.address, 0, true, {
         from: minter,
       });
-      await this.builder.add("100", this.lp3.address, 0, true, {
+      await this.builder.add("100", this.lp8.address, 0, true, {
         from: minter,
       });
-      await this.builder.add("100", this.lp3.address, 0, true, {
+      await this.builder.add("100", this.lp9.address, 0, true, {
         from: minter,
       });
-
+      await expectRevert(
+        this.builder.add("100", this.lp9.address, 0, true, {
+          from: minter,
+        }),
+        "add: this lp already exist"
+      );
       assert.equal((await this.builder.poolLength()).toString(), "9");
     });
 

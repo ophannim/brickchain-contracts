@@ -68,6 +68,8 @@ contract Builder is Ownable {
     uint256 public totalAllocPoint = 0;
     // The block number when Brick mining starts.
     uint256 public startBlock;
+    // The Existing pools.
+    mapping(address => bool) public existingPools;
 
     event Deposit(address indexed user, uint256 indexed pid, uint256 amount);
     event Withdraw(address indexed user, uint256 indexed pid, uint256 amount);
@@ -97,8 +99,6 @@ contract Builder is Ownable {
         return poolInfo.length;
     }
 
-    /// @notice Add a new lp to the pool. Can only be called by the owner.
-    /// @dev DO NOT add the same LP token more than once. Rewards will be messed up if you do.
     function add(
         uint256 _allocPoint,
         IERC20 _lpToken,
@@ -109,12 +109,16 @@ contract Builder is Ownable {
             _depositFeeBP <= 10000,
             "add: invalid deposit fee basis points"
         );
+        address lpTokenAddr = address(_lpToken);
+        require(!existingPools[lpTokenAddr], "add: this lp already exist");
         if (_withUpdate) {
             massUpdatePools();
         }
+        totalAllocPoint = totalAllocPoint.add(_allocPoint);
+        existingPools[lpTokenAddr] = true;
+
         uint256 lastRewardBlock =
             block.number > startBlock ? block.number : startBlock;
-        totalAllocPoint = totalAllocPoint.add(_allocPoint);
         poolInfo.push(
             PoolInfo({
                 lpToken: _lpToken,
